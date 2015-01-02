@@ -35,6 +35,8 @@ Now we run the Spark container
 Once the container has started, start the ssh service and then after formatting
 the namenode, we are ready to play with hadoop and spark.
 
+Note: Make sure to edit the *spark-env.sh*.
+
 ```bash
 
 service ssh start
