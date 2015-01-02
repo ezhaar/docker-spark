@@ -18,7 +18,7 @@ RUN /usr/bin/wget \
   http://d3kbcqa49mib13.cloudfront.net/spark-1.2.0-bin-hadoop2.4.tgz \
   -P /tmp && tar -xzf /tmp/spark-1.2.0-bin-hadoop2.4.tgz -C /usr/local/ && rm -rf /tmp/*
 
-RUN ln -s /usr/local/spark-1.2.0-bin-hadoop2.4 /usr/local/spark
+RUN mv /usr/local/spark-1.2.0-bin-hadoop2.4 /usr/local/spark
 RUN mv $SPARK_CONF_DIR/log4j.properties.template $SPARK_CONF_DIR/log4j.properties
 RUN cp $HADOOP_CONF_DIR/slaves $SPARK_HOME/conf/
 
