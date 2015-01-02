@@ -1,6 +1,6 @@
 # Build hadoo-base image on Ubuntu 14.04.1
 
-FROM ezhaar/hadoop-2.4.0
+FROM ezhaar/docker-scala
 MAINTAINER Izhar ul Hassan "ezhaar@gmail.com"
 
 USER root
