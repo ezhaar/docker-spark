@@ -25,5 +25,11 @@ RUN cp $HADOOP_CONF_DIR/slaves $SPARK_HOME/conf/
 ENV PATH $PATH:/usr/local/spark/bin:/usr/local/spark/sbin
 COPY spark_conf/spark-env.sh $SPARK_CONF_DIR/
 
+RUN apt-get update && apt-get install -y supervisor
+RUN rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /var/run/sshd /var/log/supervisor
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ENV TERM=xterm
 # Define default command.
-CMD ["bash"]
+CMD ["/usr/bin/supervisord"]
