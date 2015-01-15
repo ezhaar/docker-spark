@@ -8,6 +8,7 @@ USER root
 # Setup a tmp volume for downloads
 VOLUME ["/tmp"]
 
+COPY spark_conf/ssh_config /etc/ssh/
 
 # export hadoop variables
 ENV SPARK_HOME /usr/local/spark
