@@ -110,12 +110,31 @@ Our **hosts.localdomain** file on the **dns-server** looks like:
     172.17.0.5  slave2.localdomain  slave2
 
 ```
+Restart the ``dnsmasq`` by using:
+
+.. code-block:: bash
+
+    /root/dnsmasq_sighup.sh
+
+and exit from the ``dns-server``.
+
+### Update Slaves files on Master
 
 Get a terminal on master
 
 ```bash
 
     sudo docker exec -it master /bin/bash
+
+```
+
+Edit the **slaves** file in **HADOOP_CONF** and **SPARK_CON**` directories with
+the contents:
+
+``` bash
+
+    slave1
+    slave2
 
 ```
 Now, all we need to do is edit the **slaves** file in **HADOOP_CONF** and
