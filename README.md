@@ -23,7 +23,7 @@ Now we run the Spark container
     sudo docker run -it \
     --volumes-from keyhost \
     --name spark-test \
-    -h master.localdomain \
+    -h maste.localdomain \
     --dns-search=localdomain \
     ezhaar/docker-spark
 
@@ -37,106 +37,16 @@ to play with hadoop and spark.
 
 ```bash
 
-hdfs namenode -format
-hdfs dfs -mkdir /user
-hdfs dfs -mkdir /user/root
-hdfs dfs -ls
-spark-shell
+# start hadoop and spark
+/root/start-bdas.sh
 
 ```
 
-Note: Make sure to edit the *spark-env.sh*.
+Note: Make sure to verify the *spark-env.sh*.
+
+
 
 ## Create a Spark Cluster on a Single Host
 
-
-```bash
-
-    # Start the DNS Server
-    sudo docker run -d --name dns-server -h dns-server ezhaar/dnsmasq
-    
-    # note the ip address of dns-server
-    DNS_IP=$(sudo docker inspect --format \
-    '{{ .NetworkSettings.IPAddress }}' dns-server)
-    
-    #Start a couple of slaves and the master:
-
-    # start the first slave
-    sudo docker run -d \
-    --volumes-from keyhost \
-    --name slave1 \
-    -h slave1.localdomain \
-    --dns-search=localdomain \
-    --dns=$DNS_IP
-    ezhaar/docker-spark
-
-    # start the second slave
-    sudo docker run -d \
-    --volumes-from keyhost \
-    --name slave2 \
-    -h slave2.localdomain \
-    --dns-search=localdomain \
-    --dns=$DNS_IP
-    ezhaar/docker-spark
-
-    # start the master
-    sudo docker run -d \
-    --volumes-from keyhost \
-    --name master \
-    -h master.localdomain \
-    --dns-search=localdomain \
-    --dns=$DNS_IP
-    ezhaar/docker-spark
-
-```
-
-Now that our containers have started running, we need to update the hosts
-entries on the **dns-server**.
-
-```bash
-
-    # enter the dns-server
-    sudo docker exec -it dns-server /bin/bash
-    vi /etc/hosts.localdomain
-    
-```
-
-Our **hosts.localdomain** file on the **dns-server** looks like:
-
-```bash
-
-    172.17.0.3  master.localdomain  master
-    172.17.0.4  slave1.localdomain  slave1
-    172.17.0.5  slave2.localdomain  slave2
-
-```
-Restart the ``dnsmasq`` by using:
-
-.. code-block:: bash
-
-    /root/dnsmasq_sighup.sh
-
-and exit from the ``dns-server``.
-
-### Update Slaves files on Master
-
-Get a terminal on master
-
-```bash
-
-    sudo docker exec -it master /bin/bash
-
-```
-
-Edit the **slaves** file in **HADOOP_CONF** and **SPARK_CON**` directories with
-the contents:
-
-``` bash
-
-    slave1
-    slave2
-
-```
-Now, all we need to do is edit the **slaves** file in **HADOOP_CONF** and
-**SPARK_CONF** directories and then start the services as usual.
-
+To create a spark cluster look at my
+[github](https://github.com/ezhaar/spark-docker-deploy)
