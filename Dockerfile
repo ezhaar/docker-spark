@@ -31,6 +31,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/run/sshd /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY spark_conf/start-bdas.sh /root/
 ENV TERM xterm
 # Define default command.
 CMD ["/usr/bin/supervisord"]
