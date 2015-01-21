@@ -23,7 +23,7 @@ Now we run the Spark container
     sudo docker run -it \
     --volumes-from keyhost \
     --name spark-test \
-    -h maste.localdomain \
+    -h master.localdomain \
     --dns-search=localdomain \
     ezhaar/docker-spark
 

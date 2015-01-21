@@ -32,6 +32,8 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /var/run/sshd /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY spark_conf/start-bdas.sh /root/
+COPY spark_conf/core-site.xml $HADOOP_CONF_DIR/
+COPY spark_conf/yarn-site.xml $HADOOP_CONF_DIR/
 ENV TERM xterm
 # Define default command.
 CMD ["/usr/bin/supervisord"]
