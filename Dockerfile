@@ -34,7 +34,6 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY spark_conf/start-bdas /root/
 COPY spark_conf/core-site.xml $HADOOP_CONF_DIR/
 COPY spark_conf/yarn-site.xml $HADOOP_CONF_DIR/
-COPY spark_conf/start-bdas /root/
 ENV TERM xterm
 VOLUME /usr/local/spark/conf
 VOLUME /usr/local/hadoop-2.4.0/etc/hadoop
