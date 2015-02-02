@@ -21,7 +21,7 @@
 <configuration>
  <property>
  <name>fs.default.name</name>
- <value>hdfs://__MASTER__:9000</value>
+ <value>hdfs://master.localdomain:9000</value>
  </property>
  <property>
  <name>hadoop.http.staticuser.user</name>
