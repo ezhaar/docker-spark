@@ -1,7 +1,7 @@
 #!/bin/bash
 
-cp slaves $SPARK_CONF_DIR
-cp slaves $HADOOP_CONF_DIR
+cp /root/slaves $SPARK_CONF_DIR
+cp /root/slaves $HADOOP_CONF_DIR
 
 mkdir -p /data/hadoop/hdfs/nn
 mkdir -p /data/hadoop/hdfs/snn
@@ -10,7 +10,7 @@ mkdir -p /data/hadoop/hdfs/dnn
 hdfs namenode -format
 
 start-dfs.sh
-start-yarn.sh
+#start-yarn.sh
 
 hdfs dfs -mkdir /user
 hdfs dfs -mkdir /user/root
