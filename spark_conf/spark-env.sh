@@ -22,7 +22,7 @@
 export SCALA_HOME=/usr/local/scala
 export SPARK_WORKER_MEMORY=1g
 export SPARK_WORKER_CORES=1
-export SPARK_WORKER_INSTANCES=3
+export SPARK_WORKER_INSTANCES=1
 export HADOOP_HOME=/usr/local/hadoop
 
 #export SPARK_MEMORY=6g
