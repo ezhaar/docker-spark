@@ -20,7 +20,7 @@
 # - SPARK_WORKER_INSTANCES, to set the number of worker processes per node
 # - SPARK_WORKER_DIR, to set the working directory of worker processes
 export SCALA_HOME=/usr/local/scala
-export SPARK_WORKER_MEMORY=1g
+export SPARK_WORKER_MEMORY=1500m
 export SPARK_WORKER_CORES=1
 export SPARK_WORKER_INSTANCES=1
 export HADOOP_HOME=/usr/local/hadoop
