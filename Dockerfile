@@ -1,39 +1,25 @@
-# Build hadoo-base image on Ubuntu 14.04.1
-
-FROM ezhaar/docker-scala
+FROM centos:latest
 MAINTAINER Izhar ul Hassan "ezhaar@gmail.com"
 
 USER root
-
-# Setup a tmp volume for downloads
-VOLUME ["/tmp"]
-
-COPY spark_conf/ssh_config /etc/ssh/
 
 # export hadoop variables
 ENV SPARK_HOME /usr/local/spark
 ENV SPARK_CONF_DIR /usr/local/spark/conf
 
-# Download and extract hadoop-2.4.0 compiled by ezhaar on x86_64
-RUN /usr/bin/wget \
-  http://d3kbcqa49mib13.cloudfront.net/spark-1.2.0-bin-hadoop2.4.tgz \
-  -P /tmp && tar -xzf /tmp/spark-1.2.0-bin-hadoop2.4.tgz -C /usr/local/ && rm -rf /tmp/*
+RUN yum update -y
+RUN yum install -y java-1.8.0-openjdk-headless.x86_64
+RUN yum clean all
 
-RUN mv /usr/local/spark-1.2.0-bin-hadoop2.4 /usr/local/spark
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64/jre
+# Download and extract spark-1.6.3
+RUN curl -o /tmp/spark-2.1.0-bin-hadoop2.7.tgz http://d3kbcqa49mib13.cloudfront.net/spark-2.1.0-bin-hadoop2.7.tgz \
+   && tar -xzf /tmp/spark-2.1.0-bin-hadoop2.7.tgz -C /usr/local/ && rm -rf /tmp/*
+
+RUN mv /usr/local/spark-2.1.0-bin-hadoop2.7 /usr/local/spark
 RUN mv $SPARK_CONF_DIR/log4j.properties.template $SPARK_CONF_DIR/log4j.properties
-RUN cp $HADOOP_CONF_DIR/slaves $SPARK_HOME/conf/
 
 ENV PATH $PATH:/usr/local/spark/bin:/usr/local/spark/sbin
-COPY spark_conf/spark-env.sh $SPARK_CONF_DIR/
-
-RUN apt-get update && apt-get install -y supervisor
-RUN rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p /var/run/sshd /var/log/supervisor
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY spark_conf/start-bdas /root/
-COPY spark_conf/core-site.xml $HADOOP_CONF_DIR/
-COPY spark_conf/yarn-site.xml $HADOOP_CONF_DIR/
 ENV TERM xterm
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/bin/bash"]
